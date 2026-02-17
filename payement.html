@@ -904,10 +904,20 @@
 
             console.log("Payment successful, showing modal");
             
-            // Show success modal
-            document.getElementById("confirmedPhone").textContent =
-              formData.phone;
-            document.getElementById("successModal").classList.add("active");
+            // Show success modal with safety checks
+            const confirmedPhoneEl = document.getElementById("confirmedPhone");
+            const successModalEl = document.getElementById("successModal");
+            
+            if (!confirmedPhoneEl || !successModalEl) {
+              console.error("Modal elements not found!", { 
+                confirmedPhone: !!confirmedPhoneEl, 
+                successModal: !!successModalEl 
+              });
+              alert("Paiement enregistré avec succès!\n\nTéléphone: " + formData.phone + "\n\nVous recevrez une confirmation par email.");
+            } else {
+              confirmedPhoneEl.textContent = formData.phone;
+              successModalEl.classList.add("active");
+            }
 
             // Reset form
             document.getElementById("paymentForm").reset();
