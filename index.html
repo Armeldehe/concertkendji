@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kendji Girac - Nos 10 Ans | Clermont-Ferrand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1e4a7a;
+            --color-gold: #d4a574;
+            --color-sunset: #ff6b35;
+            --color-sand: #f4e8d8;
+            --color-deep-blue: #0a2540;
+            --color-sky: #87ceeb;
+            --gradient-warm: linear-gradient(135deg, #ff6b35 0%, #d4a574 50%, #87ceeb 100%);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: var(--color-deep-blue);
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url("kendji.jpg");
+            background-size: cover;
+            background-position: center;
+            animation: slowZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, 
+                rgba(10, 37, 64, 0.95) 0%, 
+                rgba(10, 37, 64, 0.85) 40%,
+                rgba(30, 74, 122, 0.3) 70%,
+                transparent 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-left {
+            max-width: 600px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 9vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            background: var(--gradient-warm);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(255, 107, 53, 0.3);
+            animation: shimmer 3s ease-in-out infinite;
+            line-height: 1;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--color-gold);
+            margin-bottom: 2rem;
+            letter-spacing: 0.15em;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .hero-right {
+            /* Espace réservé pour Kendji visible dans l'image */
+        }
+
+        .concert-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 4px solid var(--color-gold);
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .detail-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.3);
+            border-left-color: var(--color-sunset);
+        }
+
+        .detail-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .detail-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--color-gold);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+        }
+
+        .detail-info {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        /* Actions Section */
+        .actions-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--color-deep-blue) 0%, #1a3a5a 100%);
+            position: relative;
+        }
+
+        .actions-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-warm);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-warm);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--color-gold);
+            margin-bottom: 4rem;
+            font-style: italic;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .action-card {
+            position: relative;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 2px solid transparent;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: var(--gradient-warm);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .action-card:hover::before {
+            opacity: 1;
+        }
+
+        .action-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(255, 107, 53, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .action-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .action-card:nth-child(2) .action-icon {
+            animation-delay: 0.5s;
+        }
+
+        .action-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .action-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--gradient-warm);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        .action-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .action-badge {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--color-sunset);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            border: 1px solid var(--color-sunset);
+        }
+
+        /* Info Section */
+        .info-section {
+            padding: 6rem 2rem;
+            background: var(--color-deep-blue);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border-left: 4px solid var(--color-gold);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-left-color: var(--color-sunset);
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--color-gold);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        .info-card ul {
+            list-style: none;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 2;
+        }
+
+        .info-card ul li::before {
+            content: '✦ ';
+            color: var(--color-gold);
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 2rem;
+            background: linear-gradient(180deg, #1a3a5a 0%, var(--color-deep-blue) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            background: var(--gradient-warm);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-info div {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        .footer-info strong {
+            color: var(--color-gold);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--color-gold);
+            transform: scale(1.2);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Decorative Elements */
+        .floating-notes {
+            position: fixed;
+            font-size: 2rem;
+            color: rgba(212, 165, 116, 0.1);
+            pointer-events: none;
+            z-index: 1;
+            animation: floatNote 15s linear infinite;
+        }
+
+        @keyframes floatNote {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .note-1 { left: 10%; animation-delay: 0s; }
+        .note-2 { left: 30%; animation-delay: 3s; font-size: 3rem; }
+        .note-3 { left: 50%; animation-delay: 6s; }
+        .note-4 { left: 70%; animation-delay: 9s; font-size: 2.5rem; }
+        .note-5 { left: 90%; animation-delay: 12s; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 3rem 2rem;
+            }
+
+            .hero-left {
+                max-width: 100%;
+            }
+
+            .hero-overlay {
+                background: linear-gradient(to bottom, 
+                    rgba(10, 37, 64, 0.92) 0%, 
+                    rgba(10, 37, 64, 0.85) 60%,
+                    rgba(30, 74, 122, 0.7) 100%);
+            }
+
+            .hero-bg {
+                background-position: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 600px;
+            }
+
+            .hero-logo {
+                letter-spacing: 0.2em;
+            }
+
+            .concert-details {
+                gap: 1rem;
+            }
+
+            .detail-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .detail-card:hover {
+                transform: translateX(0) translateY(-5px);
+            }
+
+            .actions-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .action-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .detail-card {
+                padding: 1.5rem;
+            }
+
+            .actions-section {
+                padding: 4rem 1rem;
+            }
+
+            .action-btn {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Musical Notes -->
+    <div class="floating-notes note-1">♪</div>
+    <div class="floating-notes note-2">♫</div>
+    <div class="floating-notes note-3">♪</div>
+    <div class="floating-notes note-4">♫</div>
+    <div class="floating-notes note-5">♪</div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-logo">KENDJI GIRAC</h1>
+            <br>
+            <p class="hero-subtitle">Nos 10 ans</p>
+            <br>
+            <div class="concert-details">
+                <div class="detail-card">
+                    <div class="detail-icon">📍</div>
+                    <div class="detail-title">Lieu</div>
+                    <div class="detail-info">Zénith<br>Clermont-Ferrand</div>
+                </div>
+                
+                <div class="detail-card">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-title">Date</div>
+                    <div class="detail-info">Mardi 24 Février 2026</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Actions Section -->
+    <section class="actions-section">
+        <h2 class="section-title">Réservez Votre Expérience</h2>
+        <p class="section-subtitle">Deux façons de vivre ce moment unique</p>
+        
+        <div class="actions-grid">
+            <!-- Ticket Action -->
+            <div class="action-card" onclick="window.open('https://www.fnacspectacles.com/event/kendji-girac-nos-10-ans-tournee-zenith-dauvergne-clermont-ferrand-19165798/?srsltid=AfmBOorylv9sj3_qXQqXPiWlRD7l3rTBqiiDaUZ0EpdESs6dITbBDtLB', '_blank')">
+                <div class="action-icon">🎫</div>
+                <h3 class="action-title">Billets Concert</h3>
+                <p class="action-description">
+                    Vivez une soirée inoubliable avec Kendji Girac ! 
+                    Célébrez 10 ans de succès, de tubes légendaires et de moments magiques.
+                </p>
+                <button class="action-btn">Acheter mes billets</button>
+                <span class="action-badge">À partir de 40€</span>
+            </div>
+
+            <!-- Meet & Greet Action -->
+            <div class="action-card" onclick="window.location.href='payement.html'">
+                <div class="action-icon">⭐</div>
+                <h3 class="action-title">Meet & Greet</h3>
+                <p class="action-description">
+                    Rencontrez Kendji en personne ! Une expérience exclusive et privilégiée 
+                    avant le concert pour les fans les plus passionnés.
+                </p>
+                <button class="action-btn">Accès privilégié</button>
+                <span class="action-badge">Disponible bientôt</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+        <h2 class="section-title" style="margin-bottom: 3rem;">Informations Pratiques</h2>
+        
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>À Propos du Concert</h3>
+                <p>
+                    Kendji Girac célèbre une décennie de succès avec sa tournée anniversaire 
+                    "Nos 10 ans". Plus de 6 millions d'albums vendus, plus de 2 millions de 
+                    spectateurs conquis - une soirée exceptionnelle vous attend !
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>Au Programme</h3>
+                <ul>
+                    <li>Tous les tubes iconiques</li>
+                    <li>Color Gitano, Andalouse</li>
+                    <li>Nouveaux titres de "Vivre..."</li>
+                    <li>Surprises et moments uniques</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>Accès Zénith</h3>
+                <p>
+                    <strong>Adresse :</strong><br>
+                    Rue Maurice Chevalier<br>
+                    63800 Cournon-d'Auvergne<br><br>
+                    Parking disponible sur place.<br>
+                    Accès PMR assuré.
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>Conseils</h3>
+                <ul>
+                    <li>Arrivez en avance</li>
+                    <li>Billetterie en ligne uniquement</li>
+                    <li>Respectez les consignes</li>
+                    <li>Préparez-vous à vibrer !</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">KENDJI</div>
+            
+            <div class="footer-info">
+                <div>
+                    <strong>Contact</strong>
+                    Billetterie : Fnac Spectacles<br>
+                    Support : Service client en ligne
+                </div>
+                <div>
+                    <strong>Tournée</strong>
+                    Plus de 25 villes en France<br>
+                    Janvier - Juin 2026
+                </div>
+                <div>
+                    <strong>Partenaires</strong>
+                    En partenariat avec NRJ<br>
+                    Production : Label LN
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#" title="Facebook">📘</a>
+                <a href="#" title="Instagram">📸</a>
+                <a href="#" title="Twitter">🐦</a>
+                <a href="#" title="YouTube">📺</a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Kendji Girac - Nos 10 Ans Tournée | Tous droits réservés</p>
+                <p>Page créée pour les fans - Non officielle</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.action-card, .info-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced hover effects
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>

