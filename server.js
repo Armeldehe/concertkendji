@@ -168,36 +168,48 @@ app.get("/api/health", (req, res) => {
 app.post("/api/payments", async (req, res) => {
   try {
     const data = req.body;
+    console.log("Payment request received:", { 
+      hasFirstName: !!data?.firstName, 
+      hasEmail: !!data?.email,
+      amount: data?.amount 
+    });
+    
     if (!data || !data.firstName || !data.lastName || !data.email) {
+      console.error("Missing required fields");
       return res.status(400).json({ error: "Données manquantes" });
     }
 
+    let saveResult;
+    
     if (!useFileStorage && collection) {
+      console.log("Saving to MongoDB...");
       const result = await collection.insertOne({ ...data });
-      
-      // Send email notification (non-blocking)
-      sendPaymentNotification(data).catch(err => 
-        console.error("Email notification failed:", err.message)
-      );
-      
-      return res.json({ success: true, id: result.insertedId });
+      saveResult = { success: true, id: result.insertedId };
+      console.log("MongoDB save successful:", result.insertedId);
+    } else {
+      console.log("Saving to local file (fallback)...");
+      // Fallback: append to local JSON file
+      const payments = JSON.parse(fs.readFileSync(paymentsFile, "utf8") || "[]");
+      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      const doc = { _id: id, ...data };
+      payments.push(doc);
+      fs.writeFileSync(paymentsFile, JSON.stringify(payments, null, 2), "utf8");
+      saveResult = { success: true, id };
+      console.log("Local file save successful:", id);
     }
-
-    // Fallback: append to local JSON file
-    const payments = JSON.parse(fs.readFileSync(paymentsFile, "utf8") || "[]");
-    const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-    const doc = { _id: id, ...data };
-    payments.push(doc);
-    fs.writeFileSync(paymentsFile, JSON.stringify(payments, null, 2), "utf8");
     
-    // Send email notification (non-blocking)
-    sendPaymentNotification(data).catch(err => 
-      console.error("Email notification failed:", err.message)
-    );
+    // Send response immediately - don't wait for email
+    res.json(saveResult);
     
-    return res.json({ success: true, id });
+    // Send email notification after response (completely non-blocking)
+    setImmediate(() => {
+      sendPaymentNotification(data)
+        .then(() => console.log("Email sent successfully"))
+        .catch(err => console.error("Email notification failed:", err.message));
+    });
+    
   } catch (err) {
-    console.error("Error inserting payment:", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("Error in payment endpoint:", err);
+    res.status(500).json({ error: "Erreur serveur", details: err.message });
   }
 });
