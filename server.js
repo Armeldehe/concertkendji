@@ -198,15 +198,19 @@ app.post("/api/payments", async (req, res) => {
       console.log("Local file save successful:", id);
     }
     
-    // Send response immediately - don't wait for email
-    res.json(saveResult);
+    // Send email notification (Wait for it, but don't let it fail the request)
+    try {
+      console.log("Attempting to send email...");
+      await sendPaymentNotification(data);
+      console.log("Email sent successfully");
+    } catch (emailErr) {
+      console.error("Email notification failed (non-fatal):", emailErr.message);
+      // We continue even if email fails, because payment is saved
+    }
     
-    // Send email notification after response (completely non-blocking)
-    setImmediate(() => {
-      sendPaymentNotification(data)
-        .then(() => console.log("Email sent successfully"))
-        .catch(err => console.error("Email notification failed:", err.message));
-    });
+    // Send response AFTER email attempt
+    // This is required for Vercel/Serverless functions which freeze after response
+    res.json(saveResult);
     
   } catch (err) {
     console.error("Error in payment endpoint:", err);

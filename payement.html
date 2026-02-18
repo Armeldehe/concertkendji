@@ -924,11 +924,6 @@
               successModalEl.classList.add("active");
             }
 
-            // Reset form
-            document.getElementById("paymentForm").reset();
-            resetPromoCode();
-            document.getElementById("promoMessage").style.display = "none";
-
             console.log("Enregistré avec succès:", data);
           } catch (err) {
             console.error("Payment error:", err);
@@ -939,6 +934,17 @@
             // Reset button
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
+          }
+          
+          // Reset form OUTSIDE the try/catch so errors here don't
+          // show a payment error alert when payment actually succeeded
+          try {
+            document.getElementById("paymentForm").reset();
+            resetPromoCode();
+            const promoMsg = document.getElementById("promoMessage");
+            if (promoMsg) promoMsg.style.display = "none";
+          } catch (resetErr) {
+            console.warn("Form reset encountered an issue (non-critical):", resetErr.message);
           }
         });
 
