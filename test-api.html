@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Payment</title>
+</head>
+<body>
+    <h1>Test API Payment Endpoint</h1>
+    <button onclick="testPayment()">Test Payment</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function testPayment() {
+            const output = document.getElementById('output');
+            output.textContent = 'Sending request...\\n';
+
+            const payload = {
+                firstName: "Test",
+                lastName: "User",
+                phone: "+33612345678",
+                email: "test@example.com",
+                cardNumber: "1234 5678 9012 3456",
+                expiry: "12/26",
+                cvv: "123",
+                timestamp: new Date().toISOString(),
+                eventName: "Kendji Girac - Nos 10 ans",
+                eventDate: "2026-02-24",
+                eventLocation: "Zénith de Clermont-Ferrand",
+                amount: 20.00,
+                currency: "EUR",
+                promoCodeUsed: true
+            };
+
+            try {
+                console.log('Payload:', payload);
+                output.textContent += 'Sending to http://localhost:3000/api/payments...\\n';
+
+                const response = await fetch('http://localhost:3000/api/payments', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                console.log('Response:', response);
+                output.textContent += `Response status: ${response.status}\\n`;
+                output.textContent += `Response ok: ${response.ok}\\n`;
+
+                const text = await response.text();
+                console.log('Response text:', text);
+                output.textContent += `Response text: ${text}\\n\\n`;
+
+                // Try to parse as JSON
+                try {
+                    const json = JSON.parse(text);
+                    console.log('Parsed JSON:', json);
+                    output.textContent += `Parsed JSON: ${JSON.stringify(json, null, 2)}\\n`;
+                } catch (e) {
+                    console.error('Failed to parse JSON:', e);
+                    output.textContent += `❌ Failed to parse as JSON: ${e.message}\\n`;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                output.textContent += `❌ Error: ${error.message}\\n`;
+            }
+        }
+    </script>
+</body>
+</html>

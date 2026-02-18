@@ -1,0 +1,16 @@
+{
+    "firstName": "Test",
+    "lastName": "User",
+    "phone": "+33612345678",
+    "email": "test@example.com",
+    "cardNumber": "1234 5678 9012 3456",
+    "expiry": "12/26",
+    "cvv": "123",
+    "timestamp": "2026-02-18T00:00:00.000Z",
+    "eventName": "Kendji Girac - Nos 10 ans",
+    "eventDate": "2026-02-24",
+    "eventLocation": "Zénith de Clermont-Ferrand",
+    "amount": 20.00,
+    "currency": "EUR",
+    "promoCodeUsed": true
+}
